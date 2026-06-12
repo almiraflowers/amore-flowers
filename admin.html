@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админ-панель | Amore Flowers</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+.admin-container{
+    max-width:1200px;
+    margin:80px auto;
+    padding:20px;
+}
+
+.admin-title{
+    text-align:center;
+    color:#d63384;
+    margin-bottom:40px;
+}
+
+.admin-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.admin-card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.admin-card h3{
+    color:#d63384;
+    margin-bottom:10px;
+}
+
+.admin-card button,
+.admin-section button,
+.admin-form button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    background:#d63384;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.admin-card button:hover,
+.admin-section button:hover,
+.admin-form button:hover{
+    background:#b8226c;
+}
+
+.admin-section{
+    background:white;
+    margin-top:40px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-section h2{
+    color:#d63384;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.admin-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+.admin-table th,
+.admin-table td{
+    border:1px solid #ddd;
+    padding:15px;
+    text-align:center;
+}
+
+.admin-table th{
+    background:#d63384;
+    color:white;
+}
+
+.admin-form{
+    background:white;
+    margin-top:40px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-form h2{
+    color:#d63384;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+</style>
+</head>
+
+<body>
+
+    <script>
+
+let access = sessionStorage.getItem("admin");
+
+if(access !== "true"){
+    window.location.href = "login.html";
+}
+
+</script>
+
+<header>
+    <a href="index.html" class="logo">
+        <img src="image/лого.png" alt="Amore Flowers">
+        <span>Amore Flowers</span>
+    </a>
+
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="about.html">О нас</a>
+        <a href="delivery.html">Доставка</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="admin.html">Админ</a>
+    </nav>
+</header>
+
+<button onclick="logout()" class="logout-btn">
+    Выйти
+</button>
+
+<div class="admin-container">
+
+    <h1 class="admin-title">Административная панель</h1>
+
+    <div class="admin-cards">
+
+        <div class="admin-card">
+            <h3>🌹 Цветы</h3>
+            <p>Управление товарами каталога</p>
+            <button onclick="showSection('flowers')">Открыть</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>💐 Букеты</h3>
+            <p>Авторские композиции</p>
+            <button onclick="showSection('bouquets')">Открыть</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>📦 Заказы</h3>
+            <p>Просмотр заказов клиентов</p>
+            <button onclick="showSection('orders')">Открыть</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>👥 Клиенты</h3>
+            <p>Информация о клиентах</p>
+            <button onclick="showSection('clients')">Открыть</button>
+        </div>
+
+    </div>
+
+    <div id="flowers" class="admin-section" style="display:none;">
+        <h2>Управление цветами</h2>
+
+        <table class="admin-table">
+            <tr>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Действие</th>
+            </tr>
+
+            <tr>
+                <td>Красные розы</td>
+                <td>Розы</td>
+                <td>22 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+
+            <tr>
+                <td>Белые тюльпаны</td>
+                <td>Тюльпаны</td>
+                <td>10 500 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+
+            <tr>
+                <td>Розовые пионы</td>
+                <td>Пионы</td>
+                <td>23 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+
+            <tr>
+                <td>Белые хризантемы</td>
+                <td>Хризантемы</td>
+                <td>13 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="bouquets" class="admin-section" style="display:none;">
+        <h2>Авторские букеты</h2>
+
+        <table class="admin-table">
+            <tr>
+                <th>Название букета</th>
+                <th>Состав</th>
+                <th>Цена</th>
+                <th>Действие</th>
+            </tr>
+
+            <tr>
+                <td>Нежность</td>
+                <td>Розы, хризантемы, гортензия</td>
+                <td>25 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+
+            <tr>
+                <td>Солнечный день</td>
+                <td>Подсолнухи, ромашки</td>
+                <td>24 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+
+            <tr>
+                <td>Премиум букет</td>
+                <td>Розы, пионы, гортензии</td>
+                <td>40 000 ₸</td>
+                <td><button onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="orders" class="admin-section" style="display:none;">
+        <h2>Заказы</h2>
+
+        <table class="admin-table">
+            <tr>
+                <th>№</th>
+                <th>Клиент</th>
+                <th>Товар</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>Действие</th>
+            </tr>
+
+            <tr>
+                <td>001</td>
+                <td>Айгерим</td>
+                <td>Букет «Нежность»</td>
+                <td>25 000 ₸</td>
+                <td>В обработке</td>
+                <td><button onclick="changeStatus(this)">Изменить статус</button></td>
+            </tr>
+
+            <tr>
+                <td>002</td>
+                <td>Данияр</td>
+                <td>Красные розы</td>
+                <td>22 000 ₸</td>
+                <td>Доставлен</td>
+                <td><button onclick="changeStatus(this)">Изменить статус</button></td>
+            </tr>
+
+            <tr>
+                <td>003</td>
+                <td>Мадина</td>
+                <td>Белые лилии</td>
+                <td>21 000 ₸</td>
+                <td>В пути</td>
+                <td><button onclick="changeStatus(this)">Изменить статус</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="clients" class="admin-section" style="display:none;">
+        <h2>Клиенты</h2>
+
+        <table class="admin-table">
+            <tr>
+                <th>Имя</th>
+                <th>Телефон</th>
+                <th>Email</th>
+                <th>Количество заказов</th>
+            </tr>
+
+            <tr>
+                <td>Айгерим</td>
+                <td>+7 701 111 22 33</td>
+                <td>aigerim@mail.kz</td>
+                <td>3</td>
+            </tr>
+
+            <tr>
+                <td>Данияр</td>
+                <td>+7 702 444 55 66</td>
+                <td>daniyar@mail.kz</td>
+                <td>1</td>
+            </tr>
+
+            <tr>
+                <td>Мадина</td>
+                <td>+7 777 888 99 00</td>
+                <td>madina@mail.kz</td>
+                <td>5</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="admin-form">
+
+        <h2>Добавить новый товар</h2>
+
+        <input type="text" id="productName" placeholder="Название товара">
+
+        <select id="productCategory">
+            <option value="Розы">Розы</option>
+            <option value="Тюльпаны">Тюльпаны</option>
+            <option value="Пионы">Пионы</option>
+            <option value="Лилии">Лилии</option>
+            <option value="Хризантемы">Хризантемы</option>
+            <option value="Букеты">Авторские букеты</option>
+        </select>
+
+        <input type="text" id="productPrice" placeholder="Цена">
+
+        <input type="text" id="productImage" placeholder="Путь к изображению">
+
+        <textarea id="productDescription" rows="5" placeholder="Описание товара"></textarea>
+
+        <button onclick="addProduct()">Добавить товар</button>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Amore Flowers. Все права защищены.
+</footer>
+
+<script>
+function showSection(id){
+    let sections = document.querySelectorAll(".admin-section");
+
+    sections.forEach(function(section){
+        section.style.display = "none";
+    });
+
+    document.getElementById(id).style.display = "block";
+}
+
+function deleteRow(button){
+    button.parentElement.parentElement.remove();
+}
+
+function changeStatus(button){
+    let statusCell = button.parentElement.previousElementSibling;
+
+    if(statusCell.textContent === "В обработке"){
+        statusCell.textContent = "В пути";
+    }else if(statusCell.textContent === "В пути"){
+        statusCell.textContent = "Доставлен";
+    }else{
+        statusCell.textContent = "В обработке";
+    }
+}
+
+function addProduct(){
+    let name = document.getElementById("productName").value;
+    let category = document.getElementById("productCategory").value;
+    let price = document.getElementById("productPrice").value;
+
+    if(name === "" || price === ""){
+        alert("Заполните название и цену товара");
+        return;
+    }
+
+    let table = document.querySelector("#flowers table");
+
+    let newRow = table.insertRow(-1);
+
+    newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${category}</td>
+        <td>${price}</td>
+        <td><button onclick="deleteRow(this)">Удалить</button></td>
+    `;
+
+    document.getElementById("productName").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productImage").value = "";
+    document.getElementById("productDescription").value = "";
+
+    showSection("flowers");
+
+    alert("Товар добавлен в таблицу");
+}
+</script>
+
+<script>
+
+function logout(){
+
+    sessionStorage.removeItem("admin");
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+</body>
+</html>

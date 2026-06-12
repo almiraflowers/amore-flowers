@@ -378,3 +378,12 @@ form textarea{
     background:#d63384;
     color:white;
 }
+
+.logout-btn{
+    background:#d63384;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
